@@ -9,4 +9,7 @@ class Message(models.Model):
     sname = models.CharField(max_length=30)  # 字符串
     message = models.CharField(max_length=15)
     class Meta:
+
         db_table = 'user_message'
+
+
