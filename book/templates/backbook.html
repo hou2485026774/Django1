@@ -16,18 +16,16 @@
         <th>图书编号</th>
         <th>图书名</th>
         <th>出版社</th>
-        <th>借阅时间</th>
+        <th>还书时间</th>
         <th>用户</th>
-        <th>操作</th>
     </tr>
-    {% for lend in lend %}
+    {% for back in back %}
         <tr>
-            <td>{{ lend.lbookid }}</td>
-            <td>{{ lend.lbook }}</td>
-            <td>{{ lend.lpublisher }}</td>
-            <td>{{ lend.ltime }}</td>
-            <td>{{ lend.uname }}</td>
-            <td><a href="/book/returnbook?bookid={{ lend.lbookid }}" onclick="return confirm('确认还书吗？')">还书</a></td>
+            <td>{{ back.bbookid }}</td>
+            <td>{{ back.bbook }}</td>
+            <td>{{ back.bpublisher }}</td>
+            <td>{{ back.btime }}</td>
+            <td>{{ back.uname }}</td>
         </tr>
     {% endfor %}
 </table>

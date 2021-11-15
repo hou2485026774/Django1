@@ -25,7 +25,16 @@ class User(models.Model):
 #借阅历史
 class Lend(models.Model):
     uname = models.CharField(max_length=255)
-    lbookid = models.BigIntegerField()
+    lbookid = models.BigIntegerField(primary_key=True)
     lbook = models.CharField(max_length=255)
     ltime = models.DateField(default = timezone.now)#借阅时间
     lpublisher = models.CharField(max_length=255)
+
+#归还历史
+class Back(models.Model):
+    bid = models.BigAutoField(primary_key=True)
+    uname = models.CharField(max_length=255)
+    bbookid = models.BigIntegerField()
+    bbook = models.CharField(max_length=255)
+    btime = models.DateField(default = timezone.now)#借阅时间
+    bpublisher = models.CharField(max_length=255)

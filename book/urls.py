@@ -14,5 +14,7 @@ urlpatterns = [
     path('update2/',views.update2),
     path('person/',views.person),#个人中心
     path('lend/',views.lend),#借阅图书
-    path('lend_history/',views.lend_history)#借阅历史查询
+    path('lend_history/',views.lend_history),#借阅历史查询
+    path('returnbook/',views.returnbook),#还书
+    path('return_history',views.back_history)#还书记录
 ]

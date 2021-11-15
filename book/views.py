@@ -21,6 +21,7 @@ def login(request):
             import jsonpickle
             c = User.objects.get(uname=username)
             if check_password(password, c.password):
+
                 #将登录session 存为对象
                 user = Users(username,password)
                 request.session['login']=jsonpickle.dumps(user)
@@ -113,9 +114,8 @@ def person(request):
     uname = request.GET.get('uname')
     person = User.objects.filter(uname=uname)
     return render(request,'personal.html',{'person':person})
-#借阅书籍
+#借阅功能
 def lend(request):
-
     import jsonpickle
     user = request.session['login']
     uuser = jsonpickle.loads(user)#将python对象转化为序列化字符串
@@ -148,8 +148,32 @@ def lend_history(request):
     uname = request.GET.get('uname')
     lend = Lend.objects.filter(uname=uname).order_by('-ltime',)
     return render(request,'lendhistory.html',{'lend':lend})
+
 #还书功能
-
 def returnbook(request):
+    #获取id
+    bbookid = request.GET.get('bookid')
+    #根据借书记录查询该书信息
+    b = Lend.objects.get(lbookid=bbookid)
+    uname = b.uname
+    bbook = b.lbook
+    bpublisher = b.lpublisher
+    #存入还书记录中
+    Back.objects.create(bbookid=bbookid,uname=uname,bbook=bbook,bpublisher=bpublisher)
+    #还原库存
+    b.delete()#删除借书记录
+    book = Book.objects.get(book_id=bbookid)
+    book.book_count = book.book_count+1
+    book.save()
+    #个人借书更新
+    u = User.objects.get(uname=uname)
+    u.lend_num = u.lend_num - 1
+    u.max_num = u.max_num + 1
+    u.save()
+    return HttpResponseRedirect('/book/index')
 
-    return
+#还书记录
+def back_history(request):
+    uname = request.GET.get('uname')
+    back = Back.objects.filter(uname=uname).order_by('-btime', )
+    return render(request, 'backbook.html', {'back': back})
