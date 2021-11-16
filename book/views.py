@@ -65,7 +65,7 @@ def index(request):
 #增加
 def add(request):
     if request.method=='Get':
-        return redirect('/book/index')
+        return redirect('/book')
     elif request.method=='POST':
         # book_id = request.POST.get('book_id','')
         book_name = request.POST.get('book_name','')
@@ -74,7 +74,7 @@ def add(request):
         book_count = request.POST.get('book_count','')
         Book.objects.create(book_img=book_img,book_name=book_name,book_count=book_count,
                             book_publisher=book_publisher)
-        return redirect('/book')
+        return redirect('/book/index')
     return HttpResponse('未知错误！！！')
 def to_add(request):
     return render(request,'add.html')
