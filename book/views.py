@@ -105,7 +105,7 @@ def update2(request):
         b = Book.objects.get(book_id=book_id)
         b.book_img = book_img
         b.save()
-        return redirect('/book')
+        return redirect('/book/index')
     return HttpResponse('未知错误！！！')
 
 #个人中心

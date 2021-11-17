@@ -43,9 +43,8 @@ def register(request):
     # 注册逻辑处理
     if username and password:
         #创建数据模型
-        stu = User(sname=username,spwd=make_password(password))
+        stu = User.objects.create(sname=username,spwd=make_password(password))
         #插入数据库
-        stu.save()
         return HttpResponse('注册666')
     return HttpResponse('注册777')
 #处理分页
