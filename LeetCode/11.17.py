@@ -18,3 +18,7 @@ class Solution:
 test = Solution()
 words = ["a","ab","abc","d","cd","bcd","abcd"]
 print(test.maxProduct(words))
+u = {}
+u['username']=111
+u['password'] = 222
+print(u)

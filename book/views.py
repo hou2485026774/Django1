@@ -11,22 +11,32 @@ def index1(request):
 #登录
 def login(request):
     if request.method=='GET':
+        # #判断是否存在cookies
+        # if 'login' in request.COOKIES:
+        #     login = request.COOKIES.get('login','').split(',')
+        #     username =login[0]
+        #     password = login[1]
+        #     print("-----",username,password)
+        #     u = {}
+        #     u['username']=username
+        #     u['password'] = password
+        #     return render(request,'lg.html', u)
         return render(request,'lg.html')
     else:
         username = request.POST.get('name')
         password = request.POST.get('password')
         if username and password:
-
+            response = HttpResponse()
             # 判断查询
             import jsonpickle
             c = User.objects.get(uname=username)
-            if check_password(password, c.password):
-
+            if check_password(password, c.password) :
                 #将登录session 存为对象
                 user = Users(username,password)
                 request.session['login']=jsonpickle.dumps(user)
+                response.set_signed_cookie('login',username+','+password,path='/book/login',max_age=24*60*60)
+                # response.delete_cookie('login', path='/book/login/')
                 return HttpResponseRedirect('/book/index')
-    return HttpResponseRedirect('/book')
 #将登录信息存为对象
 class Users(object):
     def __init__(self,uname,pwd):
@@ -141,7 +151,7 @@ def lend(request):
             book.save()
             return HttpResponseRedirect('/book/index')
         else:
-            return HttpResponse('您目前没有借书余额！！')
+            return HttpResponse('您目前没有借书额度！！')
 
 #借阅历史
 def lend_history(request):

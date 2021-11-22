@@ -17,8 +17,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from .settings import DEBUG,MEDIA_ROOT
-import stu
 
 urlpatterns = [
     path('admin/', admin.site.urls),#调用路由 再调用路由下具体路径
@@ -27,6 +25,5 @@ urlpatterns = [
     path('book/',include('book.urls'))
 ]
 
-from django.views.static import serve
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
